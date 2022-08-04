@@ -1,0 +1,4 @@
+  insert into [gotask].[dbo].[role] ([role_type])
+  values ('admin'),
+  ('manager'),
+  ('user')

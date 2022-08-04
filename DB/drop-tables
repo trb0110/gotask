@@ -1,0 +1,13 @@
+
+
+DROP TABLE [task];
+GO
+
+
+DROP TABLE [user_table];
+GO
+
+
+DROP TABLE [user_role];
+GO
+

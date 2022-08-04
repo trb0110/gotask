@@ -1,0 +1,54 @@
+
+-- ************************************** [user_role]
+CREATE TABLE [user_role]
+(
+ [role_id]   int IDENTITY (1, 1) NOT NULL ,
+ [role_type] nvarchar(50) NOT NULL ,
+
+
+ CONSTRAINT [PK_135] PRIMARY KEY CLUSTERED ([role_id] ASC)
+);
+GO
+-- ************************************** [user]
+CREATE TABLE [user_table]
+(
+ [user_id]  bigint IDENTITY (1, 1) NOT NULL ,
+ [username] nvarchar(50) NOT NULL ,
+ [role_id]  int NOT NULL ,
+ [password] nvarchar(150) NOT NULL ,
+ [prefered_hours]  int NOT NULL DEFAULT 8,
+
+ CONSTRAINT [PK_129] PRIMARY KEY CLUSTERED ([user_id] ASC),
+ CONSTRAINT [FK_143] FOREIGN KEY ([role_id])  REFERENCES [user_role]([role_id])
+);
+GO
+
+
+CREATE NONCLUSTERED INDEX [FK_145] ON [user_table]
+ (
+  [role_id] ASC
+ )
+
+GO
+-- ************************************** [task]
+CREATE TABLE [task]
+(
+ [task_id]    bigint IDENTITY (1, 1) NOT NULL ,
+ [user_id]       bigint NOT NULL ,
+ [task_stamp] datetime2(7) NOT NULL CONSTRAINT [DF_task_stamp] DEFAULT GETDATE() ,
+ [task_description]          nvarchar(150) NOT NULL ,
+ [task_duration] int NOT NULL ,
+
+
+ CONSTRAINT [PK_148] PRIMARY KEY CLUSTERED ([task_id] ASC),
+ CONSTRAINT [FK_149] FOREIGN KEY ([user_id])  REFERENCES [user_table]([user_id])
+);
+GO
+
+
+CREATE NONCLUSTERED INDEX [FK_151] ON [task]
+ (
+  [user_id] ASC
+ )
+
+GO
